@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ansible = "==9.9.0"
+pywinrm = "==0.4.3"
+requests-credssp = "==2.0.0"
+dnspython = "==2.7.0"
+
+[dev-packages]
+ansible-lint = "==24.9.2"
+
+[requires]
+python_version = "3.10"
