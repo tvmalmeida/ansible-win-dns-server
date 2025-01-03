@@ -1,0 +1,14 @@
+---
+- name: Set vars for dns_rr_state present
+  ansible.builtin.set_fact:
+    dns_ptr_value: "{{ item.0 }}.{{ dns_domain }}"
+    dns_a_value: "{{ item.1 }}"
+    host_ip: "{{ item.1 }}"
+  when: dns_rr_state == "present"
+
+- name: Set vars for dns_rr_state absent
+  ansible.builtin.set_fact:
+    dns_ptr_value: null
+    dns_a_value: null
+    host_ip: "{{ dns_query.msg[0] }}"
+  when: dns_rr_state == "absent"
