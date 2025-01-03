@@ -1,0 +1,9 @@
+---
+- name: Set dns record - Type A
+  community.windows.win_dns_record:
+    name: "{{ item.0 }}"
+    type: "A"
+    value: "{{ dns_a_value }}"
+    ttl: "{{ dns_rr_ttl | default('1800') }}"
+    zone: "{{ dns_domain }}"
+    state: "{{ dns_rr_state }}"
