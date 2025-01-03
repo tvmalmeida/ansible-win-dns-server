@@ -1,0 +1,4 @@
+---
+- name: Split host ip octets
+  ansible.builtin.set_fact:
+    octet: "{{ host_ip | split('.') }}"

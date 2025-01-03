@@ -1,0 +1,33 @@
+---
+- name: Set ptr type in /24 reverse zone
+  community.windows.win_dns_record:
+    name: "{{ octet[3] }}"
+    type: "PTR"
+    value: "{{ dns_ptr_value }}"
+    ttl: "{{ dns_rr_ttl | default('1800') }}"
+    zone: "{{ octet[2] }}.{{ octet[1] }}.{{ octet[0] }}.in-addr.arpa"
+    state: "{{ dns_rr_state }}"
+  register: result1
+  ignore_errors: true
+
+- name: Set ptr type in /16 reverse zone
+  community.windows.win_dns_record:
+    name: "{{ octet[3] }}.{{ octet[2] }}"
+    type: "PTR"
+    value: "{{ dns_ptr_value }}"
+    ttl: "{{ dns_rr_ttl | default('1800') }}"
+    zone: "{{ octet[1] }}.{{ octet[0] }}.in-addr.arpa"
+    state: "{{ dns_rr_state }}"
+  when: result1.failed
+  register: result2
+  ignore_errors: true
+
+- name: Set ptr type in /8 reverse zone
+  community.windows.win_dns_record:
+    name: "{{ octet[3] }}"
+    type: "PTR"
+    value: "{{ dns_ptr_value }}"
+    ttl: "{{ dns_rr_ttl | default('1800') }}"
+    zone: "{{ octet[2] }}.{{ octet[1] }}.{{ octet[0] }}.in-addr.arpa"
+    state: "{{ dns_rr_state }}"
+  when: result1.failed and result2.failed
