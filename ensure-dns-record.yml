@@ -1,0 +1,17 @@
+---
+- name: Ensure dns record
+  hosts: "{{ node_group | default('all') }}"
+  gather_facts: false
+  run_once: true
+
+  pre_tasks:
+    - name: Set dns_rr_array
+      ansible.builtin.set_fact:
+        dns_rr_array: "{{ dns_rr_name | zip(dns_rr_value) | list }}"
+
+  tasks:
+    - name: Start process to manage record type A
+      ansible.builtin.include_tasks:
+        file: "tasks/type-a-workflow.yml"
+      loop: "{{ dns_rr_array }}"
+      when: dns_rr_type == "A"
