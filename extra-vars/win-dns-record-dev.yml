@@ -1,0 +1,19 @@
+---
+node_group: "service_dns_servers"
+
+# to add dns record type A and matching PTR
+
+dns_domain: "example.com" # insert your domain
+dns_rr_name: ['my-host1', 'my-host2']
+dns_rr_value: ['192.168.0.2', '192.168.0.3']
+
+dns_rr_type: "A"
+dns_rr_state: "present"
+
+# to remove dns record type A and matching PTR
+
+# dns_domain: "example.com" # insert your domain
+# dns_rr_name: ['my-host1', 'my-host2']
+# dns_rr_value: ['192.168.0.2', '192.168.0.3']
+# dns_rr_type: A
+# dns_rr_state: absent
