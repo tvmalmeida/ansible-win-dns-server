@@ -1,0 +1,5 @@
+---
+- name: Retrieve IP address of a dns record
+  ansible.builtin.debug:
+    msg: "{{ query('community.dns.lookup', dns_rr_target, type=dns_rr_type, server=ansible_host) }}"
+  register: dns_query
