@@ -1,0 +1,7 @@
+---
+collections:
+  - name: community.windows
+    type: galaxy
+
+  - name: community.dns
+    type: galaxy
