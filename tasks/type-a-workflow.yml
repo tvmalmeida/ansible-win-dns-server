@@ -1,0 +1,26 @@
+---
+- name: Set string to be queried
+  ansible.builtin.set_fact:
+    dns_rr_target: "{{ item.0 }}.{{ dns_domain }}"
+  when: dns_rr_state == "absent"
+
+- name: Retrieve IPv4 address
+  ansible.builtin.include_tasks:
+    file: tasks/dns-record-info.yml
+  when: dns_rr_state == "absent"
+
+- name: Set essential variables
+  ansible.builtin.include_tasks:
+    file: "tasks/conditional-vars.yml"
+
+- name: Split IPv4 address
+  ansible.builtin.include_tasks:
+    file: tasks/split-ipv4.yml
+
+- name: DNS record - Type A - {{ dns_rr_state }}
+  ansible.builtin.include_tasks:
+    file: "tasks/dns-type-a.yml"
+
+- name: DNS record - Type PTR - {{ dns_rr_state }}
+  ansible.builtin.include_tasks:
+    file: "tasks/dns-type-ptr.yml"
